@@ -65,5 +65,8 @@ def index(request):
 
     return render(request, 'index.html', context)
 
+def home(request):
+    return render(request, 'home.html')
+
 
 
