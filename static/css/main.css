@@ -3907,3 +3907,13 @@ input, select, textarea {
 			}
 
 		}
+
+.chart {
+	margin-left: 8%;
+	margin-top: 2%;
+	margin-bottom: 10%;
+	max-width: 80%;
+	max-height: 10%;
+
+
+}
