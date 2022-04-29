@@ -1,39 +1,23 @@
 import math
 import pandas as pd
 import pandas_datareader.data as pdr
+from pandas_datareader._utils import RemoteDataError
 import datetime
 from django.shortcuts import render
 from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.embed import components
 from bokeh.plotting import figure
+from .utilities import GiniIndex
 
 years = range(2010,2019)
 default_year = 2008
-def get_data(symbols, start, end):
-    result = None
-    for symbol in symbols:
-        df = pdr.DataReader(symbol['symbol'], 'fred', start, end)
-        df = df.rename(columns={df.columns[0]: symbol['title']})
-        if result is None:
-            result = df.copy()
-        else:
-            result = pd.merge_asof(left=result.copy(), right=df, on='DATE')
-           
-    result = result.set_index('DATE')
-    return result
-symbols = [
-    {'symbol': 'SIPOVGINIFRA', 'title': 'FRANCE'},
-    {'symbol': 'SIPOVGINIITA', 'title': 'ITALY'},
-    {'symbol': 'SIPOVGININOR', 'title': 'NORWAY'},
-    {'symbol': 'SIPOVGINIPOL', 'title': 'POLAND'},
-    {'symbol': 'SIPOVGINISWE', 'title': 'SWEDEN'},
-    {'symbol': 'SIPOVGINIGBR', 'title': 'UK'},
-]    
 
 
 def index(request):
+    
     year = request.GET.get('year', default_year)
-    fred_data = get_data(symbols, start=year, end=year)
+    gi = GiniIndex(start=year, end=year)
+    fred_data = gi.get_results()
     data = {}
     for x in fred_data:
         data[x] = fred_data[x][0]
