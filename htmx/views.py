@@ -1,8 +1,4 @@
 import math
-import pandas as pd
-import pandas_datareader.data as pdr
-from pandas_datareader._utils import RemoteDataError
-import datetime
 from django.shortcuts import render
 from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.embed import components
@@ -17,7 +13,7 @@ def index(request):
     
     year = request.GET.get('year', default_year)
     gi = GiniIndex(start=year, end=year)
-    fred_data = gi.get_results()
+    fred_data = gi.get_data()
     data = {}
     for x in fred_data:
         data[x] = fred_data[x][0]
