@@ -76,6 +76,29 @@ class GiniIndex:
         }
         return context
 
+import requests
+from bs4 import BeautifulSoup as bs
+
+api_key = 'b519a08f380ad1b925acec1d68eb6c4f'
+endpoint = 'https://fred.stlouisfed.org/data/SIPOVGINIFRA.txt'
+
+params = {
+'api_key': api_key,
+'file_type': 'json'
+            }
+
+response = requests.get(endpoint,params=params)
+soup = bs(response.text,"lxml")
+
+# soup.text is to get the returned text
+# split function, splits the entire text into different lines (using '\n') and stores in a list. You can define your own splitter.
+# each line is stored as an element in the allLines list.
+allLines = soup.text.split('\n') 
+
+for line in allLines:
+    if '2004' in line:
+        print(line[11:-1])
+
 
     
 
