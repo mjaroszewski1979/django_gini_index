@@ -1,17 +1,91 @@
-import pandas_datareader as pdr
-from pandas_datareader._utils import RemoteDataError
-import pandas as pd
+import requests
+from threading import Thread
+from bs4 import BeautifulSoup as bs
 from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.embed import components
 from bokeh.plotting import figure
+from bokeh.colors import RGB
 import math
 
 
-
-
-
-
 class GiniIndex:
+    def __init__(self, year):
+        self.year = year
+        self.results = {}
+        self.inputs = {
+            'FRANCE' : 'FRA',
+            'ITALY' : 'ITA',
+            'NORWAY' : 'NOR',
+            'POLAND' : 'POL',
+            'SWEDEN' : 'SWE',
+            'UK' : 'GBR'
+            }
+        self.gini_values = []
+        self.gini_countries = []
+        
+    def get_data(self, name, ticker):
+        api_key = 'b519a08f380ad1b925acec1d68eb6c4f'
+        endpoint = 'https://fred.stlouisfed.org/data/SIPOVGINI' + ticker + '.txt'
+        params = {'api_key': api_key, 'file_type': 'json'}
+        response = requests.get(endpoint,params=params)
+        soup = bs(response.text,"lxml")
+        data = soup.text.split('\n')
+        for line in data:
+            if str(self.year) in line:
+                self.results[name] = line.rstrip()[-4:]
+            
+    def get_results(self):
+        threads = []
+        for key in self.inputs:
+            threads.append(Thread(target=self.get_data, args=[key, self.inputs[key]]))
+            
+        for thread in threads:
+            thread.start()
+
+        for thread in threads:
+            thread.join()
+
+        return self.results
+
+    
+    def get_context(self):
+        red = 50
+        green = 42
+        blue = 97
+        color = RGB(r = red,
+            g = green,
+            b = blue)
+        self.get_results()
+        sorted_results = sorted(self.results.items(), key=lambda x: x[1])
+        for item in sorted_results:
+            self.gini_countries.append(item[0])
+            self.gini_values.append(item[1])
+        cds = ColumnDataSource(data=dict(countries=self.gini_countries, vals=self.gini_values))
+        fig = figure(x_range=self.gini_countries, sizing_mode='stretch_both', title=f"GINI Index for ({self.year})")
+        fig.title.align = 'center'
+        fig.title.text_font_size = '1.5em'
+        fig.xaxis.major_label_orientation = math.pi / 4
+        fig.vbar(source=cds, x='countries', top='vals', width=0.8, color=color )
+        fig.background_fill_color = "lightgrey"
+        fig.background_fill_alpha = 0.5
+        tooltips = [
+            ('Country', '@countries'),
+            ('GINI', '@vals')
+        ]
+        fig.add_tools(HoverTool(tooltips=tooltips))
+        script, div = components(fig)
+        context = {
+            'script': script,
+            'div': div,
+            'years': range(2010,2019)
+        }
+        return context
+
+    
+
+
+
+'''class GiniIndex:
     def __init__(self, start, end):
         self.start = start
         self.end = end
@@ -74,30 +148,9 @@ class GiniIndex:
             'div': div,
             'years': range(2010,2019)
         }
-        return context
+        return context'''
 
-import requests
-from bs4 import BeautifulSoup as bs
 
-api_key = 'b519a08f380ad1b925acec1d68eb6c4f'
-endpoint = 'https://fred.stlouisfed.org/data/SIPOVGINIFRA.txt'
-
-params = {
-'api_key': api_key,
-'file_type': 'json'
-            }
-
-response = requests.get(endpoint,params=params)
-soup = bs(response.text,"lxml")
-
-# soup.text is to get the returned text
-# split function, splits the entire text into different lines (using '\n') and stores in a list. You can define your own splitter.
-# each line is stored as an element in the allLines list.
-allLines = soup.text.split('\n') 
-
-for line in allLines:
-    if '2004' in line:
-        print(line[11:-1])
 
 
     

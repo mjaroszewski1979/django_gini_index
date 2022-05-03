@@ -5,8 +5,8 @@ from .utilities import GiniIndex
 def index(request):
     
     year = request.GET.get('year', 2008)
-    gi = GiniIndex(start=year, end=year)
-    context = gi.get_context(year=year)
+    gi = GiniIndex(year=year)
+    context = gi.get_context()
     if request.htmx:
         return render(request, 'partials/chart.html', context)
 
