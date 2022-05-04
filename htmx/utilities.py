@@ -6,6 +6,9 @@ from bokeh.embed import components
 from bokeh.plotting import figure
 from bokeh.colors import RGB
 import math
+import pandas as pd
+import pandas_datareader.data as pdr
+import datetime
 
 
 class GiniIndex:
@@ -82,7 +85,28 @@ class GiniIndex:
         return context
 
     
-
+def get_cpi_context():
+    df = pdr.DataReader('FPCPITOTLZGPOL', 'fred', start = datetime.datetime(2010, 1, 1), end = datetime.datetime.now())
+    years = [df.index[x].year for x in range(12)]
+    values = [round(df['FPCPITOTLZGPOL'][x], 2) for x in range(12)] 
+    fig = figure(title='CPI for Poland')
+    fig.line(x=years, y=values, line_color='black')
+    fig.xaxis.axis_label = 'Values'
+    fig.yaxis.axis_label = 'Years'
+    fig.title.align = 'center'
+    fig.title.text_font_size = '1.5em'
+    fig.background_fill_color = "lightgrey"
+    tooltips = [
+            ('Years', '@years'),
+            ('CPI', '@values')
+        ]
+    fig.add_tools(HoverTool(tooltips=tooltips))
+    script, div = components(fig)
+    context = {
+        'script': script,
+        'div': div
+    }
+    return context
 
 
 '''class GiniIndex:

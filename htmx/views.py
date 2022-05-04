@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .utilities import GiniIndex
+from .utilities import GiniIndex, get_cpi_context
 
 
 def index(request):
@@ -15,8 +15,9 @@ def index(request):
 def home(request):
     return render(request, 'home.html')
 
-'''def generic(request):
-    return render(request, 'generic.html')'''
+def cpi(request):
+    context = get_cpi_context()
+    return render(request, 'cpi.html', context)
 
 
 
