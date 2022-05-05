@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .utilities import GiniIndex, get_cpi_context
+from .utilities import GiniIndex, CpiIndex
 
 
 def index(request):
@@ -16,8 +16,15 @@ def home(request):
     return render(request, 'home.html')
 
 def cpi(request):
-    context = get_cpi_context()
+
+    symbol = request.GET.get('symbol', 'FPCPITOTLZGPOL')
+    cpi = CpiIndex(symbol=symbol)
+    context = cpi.get_cpi_context()
+    if request.htmx:
+        return render(request, 'partials/chart.html', context)
+
     return render(request, 'cpi.html', context)
+
 
 
 

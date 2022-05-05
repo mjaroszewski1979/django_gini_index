@@ -38,10 +38,24 @@
 			<div id="wrapper">
 
 				<!-- Main -->
+				<section>
+                    <div class="content">
+                        <select name="symbol" 
+                                id="select-symbol" 
+                                class="custom-select" 
+                                autocomplete="off"
+                                hx-get="{% url 'cpi' %}"
+                                hx-target="#line-chart">
+							{% for x, y in inputs.items %}	
+                            <option value="{{y}}">{{x}}</option>
+                            {% endfor %}
+                        </select>
+                </div>   
+                </section>
 
 					<section id="main" class="wrapper">
 						<div class="content">
-                            <div class="chart" id="bar-chart">
+                            <div class="chart" id="line-chart">
                                 {% include 'partials/chart.html' %}
                             </div>   
 						</div>

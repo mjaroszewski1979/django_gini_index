@@ -84,29 +84,41 @@ class GiniIndex:
         }
         return context
 
+class CpiIndex:
+    def __init__(self, symbol):
+        self.symbol = symbol
+        self.inputs = {
+            'Poland' : 'FPCPITOTLZGPOL',
+            'Germany' : 'FPCPITOTLZGDEU'
+        }
+
+    def get_key(self, dct, value):
+        return [key for key in dct if (dct[key] == value)]
     
-def get_cpi_context():
-    df = pdr.DataReader('FPCPITOTLZGPOL', 'fred', start = datetime.datetime(2010, 1, 1), end = datetime.datetime.now())
-    years = [df.index[x].year for x in range(12)]
-    values = [round(df['FPCPITOTLZGPOL'][x], 2) for x in range(12)] 
-    fig = figure(title='CPI for Poland')
-    fig.line(x=years, y=values, line_color='black')
-    fig.xaxis.axis_label = 'Values'
-    fig.yaxis.axis_label = 'Years'
-    fig.title.align = 'center'
-    fig.title.text_font_size = '1.5em'
-    fig.background_fill_color = "lightgrey"
-    tooltips = [
-            ('Years', '@years'),
-            ('CPI', '@values')
-        ]
-    fig.add_tools(HoverTool(tooltips=tooltips))
-    script, div = components(fig)
-    context = {
-        'script': script,
-        'div': div
-    }
-    return context
+    def get_cpi_context(self):
+        df = pdr.DataReader(self.symbol, 'fred', start = datetime.datetime(2010, 1, 1), end = datetime.datetime.now())
+        years = [df.index[x].year for x in range(12)]
+        values = [round(df[self.symbol][x], 2) for x in range(12)] 
+        data = self.get_key(self.inputs, self.symbol)
+        fig = figure(title=f"CPI Index for {data[0]}")
+        fig.line(x=years, y=values, line_color='black')
+        fig.xaxis.axis_label = 'Lookback Period'
+        fig.yaxis.axis_label = 'Percent'
+        fig.title.align = 'center'
+        fig.title.text_font_size = '1.5em'
+        fig.background_fill_color = "lightgrey"
+        tooltips = [
+                ('Years', '@years'),
+                ('CPI', '@values')
+            ]
+        fig.add_tools(HoverTool(tooltips=tooltips))
+        script, div = components(fig)
+        context = {
+            'script': script,
+            'div': div,
+            'inputs' : self.inputs
+        }
+        return context
 
 
 '''class GiniIndex:
