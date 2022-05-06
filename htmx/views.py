@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .utilities import GiniIndex, CpiIndex
 
 
-def index(request):
+def gini(request):
     
     year = request.GET.get('year', 2008)
     gi = GiniIndex(year=year)
@@ -10,7 +10,7 @@ def index(request):
     if request.htmx:
         return render(request, 'partials/chart.html', context)
 
-    return render(request, 'generic.html', context)
+    return render(request, 'gini.html', context)
 
 def home(request):
     return render(request, 'home.html')

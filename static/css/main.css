@@ -3909,11 +3909,21 @@ input, select, textarea {
 		}
 
 .chart {
-	margin-left: 8%;
+	margin-left: 4%;
+	margin-right: 5%;
 	margin-top: 2%;
 	margin-bottom: 10%;
-	max-width: 80%;
-	max-height: 10%;
-
-
+	min-width: 80%;
+	min-height: 10%;
 }
+#line-chart {
+	margin-right: 7%;
+}
+#cpi-select,
+#gini-select {
+	max-width: 200px;
+	margin-right: 30%;
+	margin-left: 2%;
+	margin-top: 2%;
+}
+

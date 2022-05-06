@@ -39,12 +39,12 @@
 
 				<!-- Main -->
                 <section>
-                    <div class="content">
+                    <div class="content" id="gini-select">
                         <select name="year" 
                                 id="select-year" 
                                 class="custom-select" 
                                 autocomplete="off"
-                                hx-get="{% url 'index' %}"
+                                hx-get="{% url 'gini' %}"
                                 hx-target="#bar-chart">
                             {% for year in years %}
                             <option value="{{year}}">{{year}}</option>
