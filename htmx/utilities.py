@@ -6,10 +6,13 @@ from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.embed import components
 from bokeh.plotting import figure
 from bokeh.colors import RGB
+from bokeh.transform import linear_cmap
+from bokeh.util.hex import hexbin
 import math
 import pandas as pd
 import pandas_datareader.data as pdr
 import datetime
+import numpy as np
 
 
 class GiniIndex:
@@ -88,8 +91,6 @@ class CpiIndex:
             'POLAND' : 'FPCPITOTLZGPOL',
             'SWEDEN' : 'FPCPITOTLZGSWE',
             'UK' : 'FPCPITOTLZGGBR'
-            
-            
         }
 
     def get_key(self, dct, value):
@@ -112,6 +113,57 @@ class CpiIndex:
                 ('CPI', '@y')
             ]
         fig.add_tools(HoverTool(tooltips=tooltips))
+        script, div = components(fig)
+        context = {
+            'script': script,
+            'div': div,
+            'inputs' : self.inputs
+        }
+        return context
+
+
+class StockIndex:
+    def __init__(self, stock):
+        self.stock = stock
+        self.inputs = {
+            'S&P 500' : 'SP500',
+            'DOW JONES' : 'DJIA',
+            'NASDAQ 100' : 'NASDAQ100',
+            'WILSHIRE 5000' : 'WILL5000PR',
+            'WILSHIRE US REIT' : 'WILLREITIND'
+        }
+
+    def get_key(self, dct, value):
+        return [key for key in dct if (dct[key] == value)]
+
+    def get_stock_context(self):
+        data = self.get_key(self.inputs, self.stock)
+        df = pdr.DataReader(self.stock, 'fred', start = datetime.datetime(2000, 1, 1), end = datetime.datetime.now())
+        df['pct_change'] = df.pct_change() * 100
+        result = df['pct_change'].values.tolist()
+        positive_return = np.array([x for x in result if x >= 0])[:1000]
+        negative_return = np.array([x for x in result if x < 0])[:1000]
+        if len(positive_return) > len(negative_return):
+            positive_return = np.array([x for x in result if x >= 0])[:(len(negative_return))]
+        else:
+            negative_return = np.array([x for x in result if x < 0])[:(len(positive_return))]
+        bins = hexbin(positive_return, negative_return, 0.2)
+        data = self.get_key(self.inputs, self.stock)
+        fig = figure(tools="wheel_zoom,reset", 
+            match_aspect=True, 
+            background_fill_color='#312450', 
+            sizing_mode='stretch_both', 
+            height=500, 
+            toolbar_location="below", 
+            title=f"Returns for {data[0]}")
+        fig.xaxis.axis_label = 'Positive Returns'
+        fig.yaxis.axis_label = 'Negative Returns'
+        fig.title.align = 'center'
+        fig.title.text_font_size = '1.5em'
+        fig.grid.visible = False
+        fig.hex_tile(q="q", r="r", size=0.1, line_color=None, source=bins,
+        fill_color=linear_cmap('counts', 'Viridis256', 0, max(bins.counts)))
+
         script, div = components(fig)
         context = {
             'script': script,

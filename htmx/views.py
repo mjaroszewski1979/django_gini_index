@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .utilities import GiniIndex, CpiIndex
+from .utilities import GiniIndex, CpiIndex, StockIndex
 
 
 def gini(request):
@@ -24,6 +24,16 @@ def cpi(request):
         return render(request, 'partials/chart.html', context)
 
     return render(request, 'cpi.html', context)
+
+def stock(request):
+
+    stock = request.GET.get('stock', 'SP500')
+    stock = StockIndex(stock=stock)
+    context = stock.get_stock_context()
+    if request.htmx:
+        return render(request, 'partials/chart.html', context)
+
+    return render(request, 'stock.html', context)
 
 
 
