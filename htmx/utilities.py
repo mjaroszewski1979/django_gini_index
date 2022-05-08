@@ -66,8 +66,9 @@ class GiniIndex:
         fig.title.align = 'center'
         fig.title.text_font_size = '1.5em'
         fig.xaxis.major_label_orientation = math.pi / 4
-        fig.vbar(source=cds, x='countries', top='vals', width=0.2, color='black' )
-        fig.background_fill_color = "lightgrey"
+        fig.vbar(source=cds, x='countries', top='vals', width=0.1, color='black', fill_color='white')
+        fig.background_fill_color = "#312450"
+        fig.grid.visible = False
         tooltips = [
             ('Country', '@countries'),
             ('GINI', '@vals')
@@ -102,12 +103,13 @@ class CpiIndex:
         values = [round(df[self.symbol][x], 2) for x in range(12)] 
         data = self.get_key(self.inputs, self.symbol)
         fig = figure(sizing_mode='stretch_both', height=400, toolbar_location="below", title=f"CPI Index for {data[0]}")
-        fig.line(x=years, y=values, line_color='black')
+        fig.line(x=years, y=values, line_color='white', width=1, line_dash = "dotted")
         fig.xaxis.axis_label = 'Lookback Period'
         fig.yaxis.axis_label = 'Percent'
         fig.title.align = 'center'
         fig.title.text_font_size = '1.5em'
-        fig.background_fill_color = "lightgrey"
+        fig.background_fill_color = "#312450"
+        fig.grid.visible = False
         tooltips = [
                 ('Years', '@x'),
                 ('CPI', '@y')
