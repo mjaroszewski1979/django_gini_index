@@ -1,22 +1,16 @@
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView
-from django.views.generic import FormView, TemplateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 from django.http.response import HttpResponse
 from .forms import RegisterForm
 
-class Login(LoginView):
-    template_name = 'login.html'
-
-class RegisterView(FormView):
+class RegisterView(CreateView):
     form_class = RegisterForm
-    template_name = 'register.html'
     success_url = reverse_lazy('login')
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
+    template_name = 'register.html'
+    success_message = "New user was created successfully"
 
 def check_username(request):
     username = request.POST.get('username')

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load widget_tweaks %}
 {% block title %}CPI Index{% endblock title %}
 
 {% block content %}
@@ -10,21 +10,31 @@
             <h2>Register with Global Macro</h2>
             <p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
             <div class="split style1">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="row">
+                    <div class="col-4 col-12-medium-{{ message.tags }}">
+                        <h2>{{ message|safe }}</h2>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
                 <section>
-                    <form method="POST" action="{% url 'register' %}" autocomplete='off'>
-                        {% csrf_token %}
+                    <form method="post" action="." autocomplete='off'>{% csrf_token %}
                         <div class="fields">
                             <div class="field half">
-                                <label for="email">Email</label>
-                                <input type="text" name="email" id="email" />
+                                <label for="username">Username</label>
+                                <input type="text" name="username" id="username" hx-post="/check-username/" hx-target="#username-err" hx-trigger="keyup" />
                             </div>
+                            <div class="text-danger mt-2" id="username-err"></div>
                             <div class="field half">
                                 <label for="password">Password</label>
                                 <input type="password" name="password" id="password" />
                             </div>
                         </div>
                         <ul class="actions">
-                            <li><a href="" class="button submit">Submit</a></li>
+                            <li><input type="submit" value="Create Account" class="primary" /></li>
+                            <li><input type="reset" value="Reset" /></li>
                         </ul>
                     </form>
                 </section>
