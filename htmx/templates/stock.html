@@ -11,7 +11,7 @@
                     id="select-stock" 
                     class="custom-select" 
                     autocomplete="off"
-                    hx-get="{% url 'stock' %}"
+                    hx-get="{% url 'htmx:stock' %}"
                     hx-target="#hex-chart">
                 {% for x, y in inputs.items %}	
                 <option value="{{y}}">{{x}}</option>

@@ -37,11 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'widget_tweaks',
-    'django_extensions',
     'django_htmx',
     'htmx',
-    'charts',
 ]
 
 MIDDLEWARE = [
@@ -85,10 +82,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-AUTH_USER_MODEL = 'charts.User'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
 
 
 # Password validation

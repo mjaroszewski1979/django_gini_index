@@ -21,14 +21,14 @@
 		<!-- Header -->
 			<header id="header">
 				<a 
-				hx-get="{% url 'home' %}"
+				hx-get="{% url 'htmx:home' %}"
                 hx-target="#main"
 				hx-push-url="/"
 				class="title">Global Macro</a>
 				<nav>
 					<ul>
 						<li><a 
-                            hx-get="{% url 'home' %}"
+                            hx-get="{% url 'htmx:home' %}"
                             hx-target="#main"
 							hx-push-url="/"
                             >Home</a>

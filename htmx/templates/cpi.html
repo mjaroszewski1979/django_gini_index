@@ -12,7 +12,7 @@
                     id="select-symbol" 
                     class="custom-select" 
                     autocomplete="off"
-                    hx-get="{% url 'cpi' %}"
+                    hx-get="{% url 'htmx:cpi' %}"
                     hx-target="#line-chart">
                 {% for x, y in inputs.items %}	
                 <option value="{{y}}">{{x}}</option>

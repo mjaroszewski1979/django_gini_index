@@ -12,7 +12,7 @@
                     id="select-year" 
                     class="custom-select" 
                     autocomplete="off"
-                    hx-get="{% url 'gini' %}"
+                    hx-get="{% url 'htmx:gini' %}"
                     hx-target="#bar-chart">
                 {% for year in years %}
                 <option value="{{year}}">{{year}}</option>
