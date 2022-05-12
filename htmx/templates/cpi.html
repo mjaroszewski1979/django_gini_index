@@ -4,8 +4,7 @@
 
 {% block content %}
 <div id="wrapper">
-
-    <!-- Main -->
+{% if not error_msg %}
     <section>
         <div class="content" id="cpi-select">
             <select name="symbol" 
@@ -20,7 +19,6 @@
             </select>
     </div>   
     </section>
-
         <section id="main" class="wrapper">
             <div class="content">
                 <div class="chart" id="line-chart">
@@ -28,8 +26,9 @@
                 </div>   
             </div>
         </section>
-
-
+{% else %}
+<h3>{{ error_msg }}</h3>
+{% endif %}
 </div>
 {% endblock content %}
 

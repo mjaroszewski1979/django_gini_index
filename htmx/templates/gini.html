@@ -4,8 +4,8 @@
 
 {% block content %}
 <div id="wrapper">
+    {% if not error_msg %}
 
-    <!-- Main -->
     <section>
         <div class="content" id="gini-select">
             <select name="year" 
@@ -27,6 +27,9 @@
                 </div>   
             </div>
         </section>
+    {% else %}
+    <h3>{{ error_msg }}</h3>
+    {% endif %}
 
 </div>
 {% endblock content %}

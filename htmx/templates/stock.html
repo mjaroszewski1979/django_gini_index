@@ -3,8 +3,9 @@
 {% block title %}Stock Index{% endblock title %}
 
 {% block content %}
-<div id="wrapper">
 
+<div id="wrapper">
+{% if not error_msg %}
     <section>
         <div class="content" id="stock-select">
             <select name="stock" 
@@ -20,7 +21,6 @@
     </div>   
     </section>
 
-
     <section id="main" class="wrapper">
         <div class="content">
             <div class="chart" id="hex-chart">
@@ -28,6 +28,9 @@
             </div>   
         </div>
     </section>
-
+{% else %}
+<h3>{{ error_msg }}</h3>
+{% endif %}
 </div>
+
 {% endblock content %}

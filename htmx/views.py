@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .utilities import GiniIndex, CpiIndex, StockIndex
 
+def home(request):
+    return render(request, 'home.html')
 
 def gini(request):
     
@@ -11,9 +13,6 @@ def gini(request):
         return render(request, 'partials/chart.html', context)
 
     return render(request, 'gini.html', context)
-
-def home(request):
-    return render(request, 'home.html')
 
 def cpi(request):
 
