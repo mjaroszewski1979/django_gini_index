@@ -3928,4 +3928,12 @@ input, select, textarea {
 	margin-left: 2%;
 	margin-top: 2%;
 }
+.error_text {
+	min-height: 30em;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	padding: 5%;
+}
+
 

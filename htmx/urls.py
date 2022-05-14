@@ -7,4 +7,9 @@ urlpatterns = [
     path('gini/', views.gini, name='gini'),
     path('cpi/', views.cpi, name='cpi'),
     path('stock/', views.stock, name='stock'),
+    path('test/', views.test, name='test'),
+    path('test1/', views.test1, name='test1'),
 ]
+
+handler404 ='htmx.views.page_not_found'
+handler500 ='htmx.views.server_error'

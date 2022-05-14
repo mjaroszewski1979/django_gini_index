@@ -34,6 +34,12 @@ def stock(request):
 
     return render(request, 'stock.html', context)
 
+def page_not_found(response, exception):
+    return render(response, '404.html')
+
+def server_error(response):
+    return render(response, '500.html')
+
 
 
 
