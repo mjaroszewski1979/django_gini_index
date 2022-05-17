@@ -1,6 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait as W
 from selenium.webdriver.support import expected_conditions as EC
-from .locators import HomePageLocators
+from .locators import GiniPageLocators, HomePageLocators, CpiPageLocators, StockPageLocators
+import time
 
 
 
@@ -59,45 +60,46 @@ class HomePage(BasePage):
         self.do_click(HomePageLocators.GINI_LINK)
         return 'Global Macro | Gini Index' in self.driver.title
 
-    def is_intro_close_button_works(self):
-        self.do_click(IndexPageLocators.CLOSE_BUTTON)
-        index_heading = self.get_element_text(IndexPageLocators.INDEX_HEADING)
-        text = 'DIGITAL GOLD'
-        return text in index_heading
+    def is_home_link_works(self):
+        self.do_click(HomePageLocators.HOME_LINK)
+        home_h1 = self.get_element_text(HomePageLocators.HOME_H1)
+        text = 'Global Macro'
+        return text in home_h1
 
-    def is_signals_link_works(self):
-        self.do_click(IndexPageLocators.SIGNALS_LINK)
-        signals_heading = self.get_element_text(IndexPageLocators.SIGNALS_HEADING)
-        return 'BTC/USD TECHNICAL SIGNALS' in signals_heading
+    def is_cpi_link_works(self):
+        self.do_click(HomePageLocators.INTERACTIVE_CHARTS_LINK)
+        self.do_click(HomePageLocators.CPI_LINK)
+        return 'Global Macro | CPI Index' in self.driver.title
 
-    def is_signals_close_button_works(self):
-        self.do_click(IndexPageLocators.SIGNALS_CLOSE_BUTTON)
-        index_heading = self.get_element_text(IndexPageLocators.INDEX_HEADING)
-        text = 'DIGITAL GOLD'
-        return text in index_heading
+    def is_global_macro_link_works(self):
+        self.do_click(HomePageLocators.GLOBAL_MACRO_LINK)
+        home_h1 = self.get_element_text(HomePageLocators.HOME_H1)
+        text = 'Global Macro'
+        return text in home_h1
 
-    def is_about_link_works(self):
-        self.do_click(IndexPageLocators.ABOUT_LINK)
-        about_heading = self.get_element_text(IndexPageLocators.ABOUT_HEADING)
-        return 'TECHNICAL ANALYSIS IS A RESEARCH' in about_heading
+class GiniPage(BasePage):
 
-    def is_about_close_button_works(self):
-        self.do_click(IndexPageLocators.ABOUT_CLOSE_BUTTON)
-        index_heading = self.get_element_text(IndexPageLocators.INDEX_HEADING)
-        text = 'DIGITAL GOLD'
-        return text in index_heading
+    def is_title_matches(self):
+        return 'Global Macro | Gini Index' in self.driver.title
 
-    def is_contact_link_works(self):
-        self.do_click(IndexPageLocators.CONTACT_LINK)
-        subscribe_para = self.get_element_text(IndexPageLocators.SUB_PARA)
-        return 'Subscribe to our CryptoStrategy eNewsletter' in subscribe_para
-    
-    def is_subscribe_form_works(self):
-        self.do_clear(IndexPageLocators.EMAIL_FIELD)
-        self.do_send_keys(IndexPageLocators.EMAIL_FIELD, 'digitalmj@gmail.com')
-        self.do_submit(IndexPageLocators.EMAIL_FIELD)
-        success_msg = self.get_element_text(IndexPageLocators.SUCCESS_MSG)
-        return 'Thank you for your email.' in success_msg
+    def is_select_menu_works(self):
+        self.do_click(GiniPageLocators.SELECT_YEAR)
+        time.sleep(10)
 
-    
-   
+class CpiPage(BasePage):
+
+    def is_title_matches(self):
+        return 'Global Macro | CPI Index' in self.driver.title
+
+    def is_select_menu_works(self):
+        self.do_click(CpiPageLocators.SELECT_SYMBOL)
+        time.sleep(10)
+
+class StockPage(BasePage):
+
+    def is_title_matches(self):
+        return 'Global Macro | Stock Index' in self.driver.title
+
+    def is_select_menu_works(self):
+        self.do_click(StockPageLocators.SELECT_STOCK)
+        time.sleep(10)
