@@ -4,7 +4,7 @@ from django.urls import reverse, resolve
 from . import views
 
 
-class GiniTest(TestCase):
+class GlobalMacroTest(TestCase):
 
     def setUp(self):
         self.client = Client()
@@ -61,6 +61,8 @@ class GiniTest(TestCase):
         response = self.client.get('/some_url/')
         self.assertContains(response, 'Global Macro | Page not found', status_code=404)
         self.assertTemplateUsed(response, '404.html')
+
+    
 
 
 
