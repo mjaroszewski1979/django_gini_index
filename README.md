@@ -21,6 +21,18 @@
 
 --------------------------------------------------
 
+### Code Coverage:
+* Selenium and unit tests combined
+
+```
+coverage run -p manage.py test htmx && coverage run -p manage.py test tests_selenium && coverage combine && coverage html
+
+```
+
+<img src="https://github.com/mjaroszewski1979/django_global_macro/blob/main/cov_report.png">
+
+------------------------------------------------
+
 ![caption](https://github.com/mjaroszewski1979/django_global_macro/blob/main/gm_mockup.png)
   
   Live | Code | Docker | Technologies
