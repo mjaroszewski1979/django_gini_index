@@ -5,9 +5,11 @@
 
 ### Features:
 * Connecting to FRED API using pandas-datareader as well as requests library to ensure the highest quality when importing historical time series
+* Using threading module which allows a program to run multiple operations concurrently in the same process space
 * Working with template inheritance mechanism to build a base “skeleton” template that contains all the common elements and defines blocks that child templates can override
 * Taking full advantage of HTMX - dependency-free library to access modern browser features directly from HTML, rather than using javascript
-* Using threading module which allows a program to run multiple operations concurrently in the same process space
+* Serving static files with WhiteNoise to accomplish high performance and efficiency without depending on nginx, Amazon S3 or any other external service
+* Implementing Bokeh's customizable parameters to gain full control over data visualizations when creating line charts, bar plots or hexagonal tiles to show binned aggregations
 * Breaking logic into smaller parts by adding various new Django applications to an existing project 
 * Storing app’s secure credentials in environment variables
 * Utilizing setUp method to handle especially expensive setup operations for all of the tests within a module
