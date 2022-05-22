@@ -4,7 +4,6 @@ import datetime
 import os
 from threading import Thread
 from bs4 import BeautifulSoup as bs
-from turtle import width
 from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.embed import components
 from bokeh.plotting import figure
