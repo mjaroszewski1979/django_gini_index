@@ -1,12 +1,13 @@
 ## Global Macro
-### This is a Python application powered by Django and HTMX to assist in building rich client-side experience. It provides with access to highly interactive graphs created using Bokeh for more impactful data visualization. Users have now the opportunity to study clear, elegant, and insightful charts. Proper visualization brings clarity of data which helps in decision-making.
+### This is a Django application powered by HTMX to assist in building rich client-side experience. It provides with access to highly interactive graphs created using Bokeh for more impactful data visualization. Users have now the opportunity to study clear, elegant, and insightful charts. Proper visualization brings clarity of data which helps in decision-making.
 
 --------------------------------------------------
 
 ### Features:
-* Connecting to FRED API using pandas datareader to ensure the highest quality when importing historical time series
+* Connecting to FRED API using pandas-datareader as well as requests library to ensure the highest quality when importing historical time series
 * Working with template inheritance mechanism to build a base “skeleton” template that contains all the common elements and defines blocks that child templates can override
-* Taking full advantage of Django's built-in features like cross-site request forgery protection to ensure safe data transfer in web forms to a database
+* Taking full advantage of HTMX - dependency-free library to access modern browser features directly from HTML, rather than using javascript
+* Using threading module which allows a program to run multiple operations concurrently in the same process space
 * Breaking logic into smaller parts by adding various new Django applications to an existing project 
 * Storing app’s secure credentials in environment variables
 * Utilizing setUp method to handle especially expensive setup operations for all of the tests within a module
