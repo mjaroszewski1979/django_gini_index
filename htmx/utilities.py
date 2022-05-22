@@ -1,17 +1,17 @@
-from turtle import width
+import math
 import requests
+import datetime
+import os
 from threading import Thread
 from bs4 import BeautifulSoup as bs
+from turtle import width
 from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.embed import components
 from bokeh.plotting import figure
-from bokeh.colors import RGB
 from bokeh.transform import linear_cmap
 from bokeh.util.hex import hexbin
-import math
 from pandas_datareader._utils import RemoteDataError
 import pandas_datareader.data as pdr
-import datetime
 import numpy as np
 
 
@@ -31,7 +31,7 @@ class GiniIndex:
         self.gini_countries = []
         
     def get_data(self, name, ticker):
-        api_key = 'b519a08f380ad1b925acec1d68eb6c4f'
+        api_key = os.environ.get('API_KEY')
         endpoint = 'https://fred.stlouisfed.org/data/SIPOVGINI' + ticker + '.txt'
         params = {'api_key': api_key, 'file_type': 'json'}
         try:
