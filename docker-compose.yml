@@ -2,9 +2,17 @@ version: "3.8"
 
 services:
   django:
+    # Build the Docker container using the Dockerfile found in the current directory (denoted by '.')
     build: .
+    
+    # Set the container name to 'django' for easy identification
     container_name: django
+    
+    # Mount the current directory ('.') from the host to '/app' in the container, allowing live code updates
     volumes:
       - .:/app
+    
+    # Expose port 8000 on the host and map it to port 8000 in the container, enabling access to the Django application
     ports:
       - "8000:8000"
+
