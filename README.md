@@ -63,14 +63,21 @@ coverage run -p manage.py test htmx && coverage run -p manage.py test tests_sele
 <img src="https://github.com/mjaroszewski1979/django_global_macro/blob/main/cov_report.png">
 
 ### Docker
+#### Using Docker Compose
 
-1. Pull an image from Docker Hub:
+1. Clone the repository:
   ```bash
-  docker pull <imagename>
+  git clone https://github.com/mjaroszewski1979/django_global_macro.git
+  cd django_global_macro
+  ```
+2. Set up environment variables:
+   Create a .env file and add your configurations:
+  ```bash
+  FRED_API_KEY=<your-api-key>
   ```  
-2. Create and start a container:
+3. Build and start the container:
   ```bash
-  docker run -p 8000:8000 -e FRED_API_KEY="<your api key>" <imagename>
+  docker-compose up --build
   ```  
 
 ### Technologies Used
