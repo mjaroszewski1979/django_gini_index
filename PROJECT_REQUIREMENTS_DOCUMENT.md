@@ -60,4 +60,39 @@ Requirement | Condition | Expected Outcome | Test Case
 ----------- | --------- | ---------------- | ---------
 The application must handle 404 errors correctly. | When a non-existent URL is accessed. | The response should have a status code of 404, use the 404.html template, and contain the text Global Macro Page not found. | test_handler404
 
+### Selenium Tests
+
+#### HomePage Class Requirements
+
+Requirement | Condition | Expected Outcome | Test Case
+----------- | --------- | ---------------- | ---------
+The home page title must match correctly. | When the home page is loaded. | The page title should be 'Global Macro Home'. | is_title_matches
+The home page heading must be displayed correctly. | When the home page is loaded. | The heading text should match the expected content. | The heading should be "Investment strategy based on the interpretation and prediction of large-scale events related to national economies, history, and international relations. The strategy typically employs forecasts and analysis of interest rate trends, international trade and payments, political changes, government policies, inter-government relations, and other broad systemic factors." | is_home_heading_displayed_correctly
+The interactive charts link must work correctly. | When the interactive charts link is clicked. | The content of the first section should match the expected content. | The first section should contain "This is a measure of the distribution of income across a population. A higher Gini index indicates greater inequality, with high-income individuals receiving much larger percentages of the total income of the population." | is_interactive_charts_link_works
+The home link must work correctly. | When the home link is clicked. | The home page heading should display 'Global Macro'. | The heading should be 'Global Macro'. | is_home_link_works
+The CPI link must work correctly. | When the CPI link is clicked after the interactive charts link. | The page title should change to 'Global Macro CPI Index'. | is_cpi_link_works
+The global macro link must work correctly. | When the global macro link is clicked. | The home page heading should display 'Global Macro'. | The heading should be 'Global Macro'. | is_global_macro_link_works
+
+#### Gini Page Class Requirements
+
+Requirement | Condition | Expected Outcome | Test Case
+----------- | --------- | ---------------- | ---------
+The Gini page title must match correctly. | When the Gini page is loaded. | The page title should be 'Global Macro Gini Index'. | is_title_matches
+The Gini page select year menu must work correctly. | When the select year menu is clicked. | The application should wait for 10 seconds after clicking the select year menu. | is_select_menu_works
+
+#### CPI Page Class Requirements
+
+Requirement | Condition | Expected Outcome | Test Case
+----------- | --------- | ---------------- | ---------
+The CPI page title must match correctly. | When the CPI page is loaded. | The page title should be 'Global Macro CPI Index'. | is_title_matches
+The CPI page select symbol menu must work correctly. | When the select symbol menu is clicked. | The application should wait for 10 seconds after clicking the select symbol menu. | is_select_menu_works
+
+#### Stock Page Class Requirements
+
+Requirement | Condition | Expected Outcome | Test Case
+----------- | --------- | ---------------- | ---------
+The stock page title must match correctly. | When the stock page is loaded. | The page title should be 'Global Macro Stock Index'. | is_title_matches
+The stock page select stock menu must work correctly. | When the select stock menu is clicked. | The application should wait for 10 seconds after clicking the select stock menu. | is_select_menu_works
+
+
 
